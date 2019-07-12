@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                             2 -> det = myCell.toString()
                         }
                         colno++
-                        Log.e(TAG, " Index :" + myCell.columnIndex + " -- " + myCell.toString())
+                        Log.d(TAG, " Index :" + myCell.columnIndex + " -- " + myCell.toString())
                     }
                     textView.append("$sno -- $date  -- $det\n")
                 }
