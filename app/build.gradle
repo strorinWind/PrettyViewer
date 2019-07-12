@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -32,8 +33,9 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$versionOkHttpLogingInterceptor"
 
     implementation "org.apache.poi:poi:$versionApachePoi"
-    implementation "org.apache.poi:poi-ooxml:$versionApachePoi"
+//    implementation "org.apache.poi:poi-ooxml:$versionApachePoi"
 
+    implementation 'com.android.support:multidex:1.0.3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
