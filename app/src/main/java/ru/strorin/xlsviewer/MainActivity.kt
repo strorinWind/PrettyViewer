@@ -1,6 +1,5 @@
 package ru.strorin.xlsviewer
 
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +9,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
-import org.apache.poi.hssf.usermodel.HSSFCell
-import org.apache.poi.hssf.usermodel.HSSFRow
-import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.apache.poi.poifs.filesystem.POIFSFileSystem
+import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.xssf.usermodel.XSSFCell
+import org.apache.poi.xssf.usermodel.XSSFRow
+
 
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.simpleName.orEmpty()
@@ -106,19 +105,13 @@ class MainActivity : AppCompatActivity() {
 
     fun readExcelFileFromAssets() {
         try {
-            val myInput: InputStream
-            // initialize asset manager
-//            val assetManager = assets
             //  open excel sheet
             val file = File(getExternalFilesDir(null), fileName)
-            myInput = contentResolver.openInputStream(Uri.fromFile(file))!!
-//            myInput = assetManager.open("myexcelsheet.xls")
             // Create a POI File System object
-            val myFileSystem = POIFSFileSystem(myInput)
+//            val myFileSystem = POIFSFileSystem(myInput)
             // Create a workbook using the File System
-//            val wb = XSSFWorkbook(File("file.xlsx"))
+            val myWorkBook = WorkbookFactory.create(file);
 
-            val myWorkBook = HSSFWorkbook(myFileSystem)
             // Get the first sheet from workbook
             val mySheet = myWorkBook.getSheetAt(0)
             // We now need something to iterate through the cells.
@@ -127,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             textView.append("\n")
             while (rowIter.hasNext()) {
                 Log.e(TAG, " row no $rowno")
-                val myRow = rowIter.next() as HSSFRow
+                val myRow = rowIter.next() as XSSFRow
                 if (rowno != 0) {
                     val cellIter = myRow.cellIterator()
                     var colno = 0
@@ -135,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                     var date = ""
                     var det = ""
                     while (cellIter.hasNext()) {
-                        val myCell = cellIter.next() as HSSFCell
+                        val myCell = cellIter.next() as XSSFCell
                         when (colno) {
                             0 -> sno = myCell.toString()
                             1 -> date = myCell.toString()
