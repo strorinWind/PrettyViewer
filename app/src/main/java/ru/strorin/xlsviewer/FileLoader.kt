@@ -11,16 +11,7 @@ const val TIMEOUT_IN_SECONDS = 5L
 
 class FileLoader {
 
-    private lateinit var fileEndpoint: FileEndpoint
-
-    companion object {
-        private val sInstance: FileLoader = FileLoader()
-
-        fun getInstance() : FileLoader {
-            return sInstance
-        }
-    }
-
+    private val fileEndpoint: FileEndpoint
 
     init {
         val httpClient = buildOkHttpClient()
@@ -28,6 +19,14 @@ class FileLoader {
 
         //init endpoints here. It's can be more then one endpoint
         fileEndpoint = retrofit.create<FileEndpoint>(FileEndpoint::class.java)
+    }
+
+    companion object {
+        private val sInstance: FileLoader = FileLoader()
+
+        fun getInstance() : FileLoader {
+            return sInstance
+        }
     }
 
     private fun buildRetrofitClient(client: OkHttpClient): Retrofit {
