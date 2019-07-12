@@ -1,9 +1,9 @@
-package ru.strorin.xlsviewer
+package ru.strorin.xlsviewer.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import ru.strorin.xlsviewer.network.FileEndpoint
+import ru.strorin.xlsviewer.network.endpoints.FileEndpoint
 import java.util.concurrent.TimeUnit
 
 const val URL = "https://priem3.hse.ru/"

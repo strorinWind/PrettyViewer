@@ -1,4 +1,4 @@
-package ru.strorin.xlsviewer.network
+package ru.strorin.xlsviewer.network.endpoints
 
 import okhttp3.ResponseBody
 import retrofit2.Call
