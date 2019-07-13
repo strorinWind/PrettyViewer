@@ -9,7 +9,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.strorin.xlsviewer.network.FileLoader
-import ru.strorin.xlsviewer.network.FileParser
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     val writtenToDisk = parser.writeResponseBodyToDisk(response.body()!!, fileName)
 
                     Log.d(TAG, "file download was a success? $writtenToDisk")
-                    textView.append(parser.readExcelFileFromAssets(fileName))
+                    textView.append(parser.readExcelFile(fileName))
                 } else {
                     Log.d(TAG, "server contact failed")
                 }

@@ -1,4 +1,4 @@
-package ru.strorin.xlsviewer.network
+package ru.strorin.xlsviewer
 
 import android.content.Context
 import android.util.Log
@@ -61,13 +61,11 @@ class FileParser(context: Context) {
 
     }
 
-    fun readExcelFileFromAssets(name: String) : String {
+    fun readExcelFile(name: String) : String {
         var resString : String = ""
         try {
             //  open excel sheet
             val file = File(mContext.getExternalFilesDir(null), name)
-            // Create a POI File System object
-//            val myFileSystem = POIFSFileSystem(myInput)
             // Create a workbook using the File System
             val myWorkBook = WorkbookFactory.create(file);
 
@@ -77,11 +75,15 @@ class FileParser(context: Context) {
             val rowIter = mySheet.rowIterator()
             var rowno = 0
             resString += "\n"
+            var currentNum = 1.0
 
             while (rowIter.hasNext()) {
                 Log.e(TAG, " row no $rowno")
                 val myRow = rowIter.next() as XSSFRow
-                if (rowno != 0) {
+
+                val xssfCell = myRow.first() as XSSFCell
+
+                if (xssfCell.cellType == 0 && xssfCell.numericCellValue == currentNum) {
                     val cellIter = myRow.cellIterator()
                     var colno = 0
                     var sno = ""
@@ -92,6 +94,7 @@ class FileParser(context: Context) {
                         Log.d(TAG, " Index :" + myCell.columnIndex + " -- " + myCell.toString())
                     }
                     resString += "$sno\n"
+                    currentNum++
                 }
                 rowno++
             }
