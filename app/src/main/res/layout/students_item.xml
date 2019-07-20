@@ -3,38 +3,45 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="center_vertical">
+              android:gravity="center_vertical"
+              android:paddingStart="@dimen/half_material_margin"
+              android:paddingEnd="@dimen/half_material_margin">
+
     <TextView
             android:id="@+id/ord_num"
-            android:layout_width="wrap_content"
+            android:layout_width="16dp"
+            android:gravity="end"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/half_material_margin"
             />
 
     <TextView
             android:id="@+id/db_num"
             android:layout_width="wrap_content"
+            android:gravity="end"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_material_margin"
             />
 
     <TextView
             android:id="@+id/name_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="@dimen/half_material_margin"
             />
 
     <TextView
             android:id="@+id/scores_num"
             android:layout_width="wrap_content"
+            android:gravity="end"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_material_margin"
             />
 
     <TextView
             android:id="@+id/place_view"
-            android:layout_width="wrap_content"
+            android:layout_width="24dp"
+            android:gravity="end"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_material_margin"
             />
