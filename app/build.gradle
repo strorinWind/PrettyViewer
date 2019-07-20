@@ -29,11 +29,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "com.android.support:recyclerview-v7:$versionRecyclerView"
+
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$versionOkHttpLogingInterceptor"
-
-//    implementation "org.apache.poi:poi:$versionApachePoi"
-//    implementation "org.apache.poi:poi-ooxml:$versionApachePoi"
 
     implementation 'com.android.support:multidex:1.0.3'
 

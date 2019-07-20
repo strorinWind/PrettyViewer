@@ -6,6 +6,7 @@ import okhttp3.ResponseBody
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFRow
+import ru.strorin.xlsviewer.data.StudentDTO
 import java.io.*
 
 class FileParser(context: Context) {
@@ -61,8 +62,8 @@ class FileParser(context: Context) {
 
     }
 
-    fun readExcelFile(name: String) : String {
-        var resString : String = ""
+    fun readExcelFile(name: String) : MutableList<StudentDTO> {
+        val studentsList: MutableList<StudentDTO> = ArrayList();
         try {
             //  open excel sheet
             val file = File(mContext.getExternalFilesDir(null), name)
@@ -74,34 +75,34 @@ class FileParser(context: Context) {
             // We now need something to iterate through the cells.
             val rowIter = mySheet.rowIterator()
             var rowno = 0
-            resString += "\n"
             var currentNum = 1.0
+            var student: StudentDTO.Builder
 
             while (rowIter.hasNext()) {
+                student = StudentDTO.Builder()
                 Log.e(TAG, " row no $rowno")
                 val myRow = rowIter.next() as XSSFRow
 
                 val xssfCell = myRow.first() as XSSFCell
 
                 if (xssfCell.cellType == 0 && xssfCell.numericCellValue == currentNum) {
-                    val cellIter = myRow.cellIterator()
-                    var colno = 0
-                    var sno = ""
-                    while (cellIter.hasNext()) {
-                        val myCell = cellIter.next() as XSSFCell
-                        sno += "$myCell "
-                        colno++
-                        Log.d(TAG, " Index :" + myCell.columnIndex + " -- " + myCell.toString())
-                    }
-                    resString += "$sno\n"
+                    student.num(xssfCell.numericCellValue.toInt())
+                    student.regNum(myRow.getCell(1).numericCellValue.toInt())
+                    student.name(myRow.getCell(2).stringCellValue)
+                    student.place(myRow.getCell(6).stringCellValue)
+                    student.scores(myRow.getCell(17).numericCellValue.toInt())
+
                     currentNum++
                 }
                 rowno++
+                val studentEntity = student.build()
+                if (studentEntity.num >0 ) {
+                    studentsList.add(studentEntity)
+                }
             }
         } catch (e: Exception) {
             Log.d(TAG, "error $e")
         }
-        return resString
-
+        return studentsList
     }
 }

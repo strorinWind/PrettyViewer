@@ -3,24 +3,27 @@ package ru.strorin.xlsviewer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.strorin.xlsviewer.network.FileLoader
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.simpleName.orEmpty()
 
-    private lateinit var textView: TextView
+    private lateinit var rvStudents: RecyclerView
+    private lateinit var adapter: StudentsRecyclerAdapter
     private val fileName = "FutureStudioIcon.xls"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        textView = findViewById(R.id.textView)
+        findViews()
+        setupRecyclerViews()
     }
 
     override fun onResume() {
@@ -30,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun someFun() {
+
         val call = FileLoader.getInstance().file().downloadFileWithFixedUrl()
 
         call.enqueue(object : Callback<ResponseBody> {
@@ -41,7 +45,8 @@ class MainActivity : AppCompatActivity() {
                     val writtenToDisk = parser.writeResponseBodyToDisk(response.body()!!, fileName)
 
                     Log.d(TAG, "file download was a success? $writtenToDisk")
-                    textView.append(parser.readExcelFile(fileName))
+                    val list = parser.readExcelFile(fileName)
+                    adapter.setDataset(list)
                 } else {
                     Log.d(TAG, "server contact failed")
                 }
@@ -53,4 +58,19 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun setupRecyclerViews() {
+        adapter = StudentsRecyclerAdapter()
+
+        setRecyclerViewDecoration(rvStudents)
+        rvStudents.adapter = adapter
+    }
+
+    private fun setRecyclerViewDecoration(recyclerView: RecyclerView) {
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+    }
+
+    private fun findViews() {
+        rvStudents = findViewById(R.id.rv_students)
+    }
 }
